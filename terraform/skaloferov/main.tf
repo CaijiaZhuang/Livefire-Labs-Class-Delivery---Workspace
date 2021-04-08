@@ -1,5 +1,5 @@
 # Get Data for instance(s) id(s)
-data "aws_instance" "foo" {
+data "aws_instance" "instance" {    
   instance_id = var.awsInstanceId1
 }
 
