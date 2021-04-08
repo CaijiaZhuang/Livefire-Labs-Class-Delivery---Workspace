@@ -30,10 +30,48 @@ locals {
 }
 
 
-# Get Data for instance(s) id(s)
-data "aws_instance" "instance" {    
-  instance_id = var.awsInstanceId1
+
+# Get Instnace(s) Id(s)
+data "aws_instances" "instances" {
+  #instance_id = var.awsInstanceId
+
+  filter {
+    name   = "instance-id"
+    values = [
+      # Get all instnace Id(s) from machine resource 
+      local.awsInstanceId1_hasMultiple == false ? local.awsInstanceId1_obj[0] : "",
+      local.awsInstanceId1_length == 2 ? local.awsInstanceId1_obj[0] : "", 
+      local.awsInstanceId1_length == 2 ? local.awsInstanceId1_obj[1] : "", 
+      local.awsInstanceId1_length == 3 ? local.awsInstanceId1_obj[0] : "", 
+      local.awsInstanceId1_length == 3 ? local.awsInstanceId1_obj[1] : "", 
+      local.awsInstanceId1_length == 3 ? local.awsInstanceId1_obj[2] : "", 
+
+      # Get all instnace Id(s) from machine resource
+      local.awsInstanceId2_hasMultiple == false ? local.awsInstanceId2_obj[0] : "",
+      local.awsInstanceId2_length == 2 ? local.awsInstanceId2_obj[0] : "", 
+      local.awsInstanceId2_length == 2 ? local.awsInstanceId2_obj[1] : "", 
+      local.awsInstanceId2_length == 3 ? local.awsInstanceId2_obj[0] : "", 
+      local.awsInstanceId2_length == 3 ? local.awsInstanceId2_obj[1] : "", 
+      local.awsInstanceId2_length == 3 ? local.awsInstanceId2_obj[2] : "" ,
+
+      # Get all instnace Id(s) from machine resource
+      local.awsInstanceId3_hasMultiple == false ? local.awsInstanceId3_obj[0] : "",
+      local.awsInstanceId3_length == 2 ? local.awsInstanceId3_obj[0] : "", 
+      local.awsInstanceId3_length == 2 ? local.awsInstanceId3_obj[1] : "", 
+      local.awsInstanceId3_length == 3 ? local.awsInstanceId3_obj[0] : "", 
+      local.awsInstanceId3_length == 3 ? local.awsInstanceId3_obj[1] : "", 
+      local.awsInstanceId3_length == 3 ? local.awsInstanceId3_obj[2] : "" 
+      ]
+  }
 }
+
+
+# Get Data for instance(s) id(s)
+data "aws_instance" "instance" {                                
+  count       = length(data.aws_instances.instances.ids)
+  instance_id = data.aws_instances.instances.ids[count.index]
+}
+
 
 # Create Security Group
 resource "aws_security_group" "class_delivery_sg" {       
