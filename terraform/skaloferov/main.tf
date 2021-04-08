@@ -119,7 +119,8 @@ resource "aws_security_group_rule" "egress_rules" {
 
 # Attach Instance(s) eni(s) to the Security Group
 resource "aws_network_interface_sg_attachment" "sg_attachment" {                        
+  count                = length(data.aws_instance.instance)                             # Iterate over all Instances
   security_group_id    = aws_security_group.class_delivery_sg.id                        # SG ID
-  network_interface_id = data.aws_instance.instance.network_interface_id                # ENI ID
+  network_interface_id = data.aws_instance.instance[count.index].network_interface_id   # ENI ID
   depends_on           = [aws_security_group.class_delivery_sg]                         # SG needs to exist first 
 }
