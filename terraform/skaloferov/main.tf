@@ -2,6 +2,31 @@ locals {
   # SG Rules
   awsSgIngressRules_obj = jsondecode(var.awsSgIngressRules)   # Ingress
   awsSgEgressRules_obj  = jsondecode(var.awsSgEgressRules)    # Egress
+
+  # Machine Resources: 
+  # awsInstanceId1_hasMultiple: Return False if instances <1 , and Trie if >1 for this machine resource
+  # awsInstanceId1_obj : When "count" is not set in a machine resource , a string with the instance id 
+  # "i-instanceid" is returned. When 'count" is set , a json string is returned ["i-instanceid","..."]. 
+  # We are accountin for this by wrapping the string , just in case , in [""] , then if it was a json 
+  # which will result in ["[""]"] , we substring it again to [""]
+  # awsInstanceId1_length: Set to 0 if there is only 1 instance , otherwize set to the number of isntances. 
+
+  # 1
+  awsInstanceId1_hasMultiple = length(regexall("[,]",var.awsInstanceId1)) < 1 ? false : true                              
+  awsInstanceId1_obj = jsondecode(replace(replace("[\"${var.awsInstanceId1}\"]","[\"[\"", "[\""),"\"]\"]","\"]"))
+  #awsInstanceId1_obj = jsondecode(var.awsInstanceId1)
+  #awsInstanceId1_obj = local.awsInstanceId1_hasMultiple == true ? jsondecode(var.awsInstanceId1) : var.awsInstanceId1     
+  awsInstanceId1_length = local.awsInstanceId1_hasMultiple == true ? length(local.awsInstanceId1_obj) : 0               
+  # 2
+  awsInstanceId2_hasMultiple = length(regexall("[,]",var.awsInstanceId2)) < 1 ? false : true                              
+  awsInstanceId2_obj = jsondecode(replace(replace("[\"${var.awsInstanceId2}\"]","[\"[\"", "[\""),"\"]\"]","\"]"))
+  awsInstanceId2_length = local.awsInstanceId2_hasMultiple == true ? length(local.awsInstanceId2_obj) : 0        
+  # 2
+  awsInstanceId3_hasMultiple = length(regexall("[,]",var.awsInstanceId3)) < 1 ? false : true                              
+  awsInstanceId3_obj = jsondecode(replace(replace("[\"${var.awsInstanceId3}\"]","[\"[\"", "[\""),"\"]\"]","\"]"))
+  awsInstanceId3_length = local.awsInstanceId3_hasMultiple == true ? length(local.awsInstanceId3_obj) : 0      
+
+
 }
 
 
