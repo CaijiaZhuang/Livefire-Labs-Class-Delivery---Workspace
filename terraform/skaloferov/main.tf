@@ -1,3 +1,10 @@
+locals {
+  # SG Rules
+  awsSgIngressRules_obj = jsondecode(var.awsSgIngressRules)   # Ingress
+  awsSgEgressRules_obj  = jsondecode(var.awsSgEgressRules)    # Egress
+}
+
+
 # Get Data for instance(s) id(s)
 data "aws_instance" "instance" {    
   instance_id = var.awsInstanceId1
