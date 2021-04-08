@@ -33,11 +33,11 @@ resource "aws_security_group_rule" "ingress_rules" {
 resource "aws_security_group_rule" "egress_rules" {                                   
   type              = "egress"
 
-  from_port         = var.awsSgIngressRules[0].from_port
-  to_port           = var.awsSgIngressRules[0].to_port
-  protocol          = var.awsSgIngressRules[0].protocol
-  cidr_blocks       = ["${var.awsSgIngressRules[0].cidr_blocks}"]
-  description       = var.awsSgIngressRules[0].description
+  from_port         = var.awsSgEgressRules[0].from_port
+  to_port           = var.awsSgEgressRules[0].to_port
+  protocol          = var.awsSgEgressRules[0].protocol
+  cidr_blocks       = ["${var.awsSgEgressRules[0].cidr_blocks}"]
+  description       = var.awsSgEgressRules[0].description
   
   security_group_id = aws_security_group.class_delivery_sg.id                           # Security Group ID to which to attach 
   depends_on        = [aws_security_group.class_delivery_sg]                            # SG needs to exist first
