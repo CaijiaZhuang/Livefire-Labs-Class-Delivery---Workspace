@@ -1,3 +1,8 @@
+locals {
+  # SG Rules
+  awsSgIngressRules_obj = jsondecode(var.awsSgIngressRules)   # Ingress
+  awsSgEgressRules_obj  = jsondecode(var.awsSgEgressRules)    # Egress
+}
 # Create Security Group
 resource "aws_security_group" "class_delivery_sg" {       
   name        = "class-delivery-${var.awsSgName}"                                       # SG Name
