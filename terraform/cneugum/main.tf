@@ -1,3 +1,8 @@
+# Get Data for instance(s) id(s)
+data "aws_instance" "instance" {
+  instance_id = var.awsInstanceId1
+}
+
 # Create Security Group
 resource "aws_security_group" "class_delivery_sg" {       
   name        = "class-delivery-${var.awsSgName}"                                       # SG Name
