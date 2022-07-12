@@ -1,3 +1,10 @@
+variable "awsSgIngressRules" {      # AWS Security Group Ingress Rules
+  type = string
+}
+variable "awsSgEgressRules" {       # AWS Security Group Egress Rules
+  type = string
+}
+
 variable "awsSgName" {              # Security Group Name
   type = string
 }
