@@ -1,8 +1,7 @@
-variable "awsSgIngressRules" {      # AWS Security Group Ingress Rules
-  type = string
-}
-variable "awsSgEgressRules" {       # AWS Security Group Egress Rules
-  type = string
+locals {
+  # SG Rules
+  awsSgIngressRules_obj = jsondecode(var.awsSgIngressRules)   # Ingress
+  awsSgEgressRules_obj  = jsondecode(var.awsSgEgressRules)    # Egress
 }
 
 variable "awsSgName" {              # Security Group Name
@@ -34,4 +33,11 @@ variable "awsInstanceId2" {         # Machine Resource 2 Instance Id(s)
 variable "awsInstanceId3" {         # Machine Resource 3 Instance Id(s)
   type    = string
   default = ""                      # Account for when instances is not passed. 
+}
+
+variable "awsSgIngressRules" {      # AWS Security Group Ingress Rules
+  type = string
+}
+variable "awsSgEgressRules" {       # AWS Security Group Egress Rules
+  type = string
 }
