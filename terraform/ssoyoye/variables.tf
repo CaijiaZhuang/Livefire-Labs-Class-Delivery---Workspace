@@ -28,3 +28,10 @@ variable "awsInstanceId3" {         # Machine Resource 3 Instance Id(s)
   type    = string
   default = ""                      # Account for when instances is not passed. 
 }
+
+variable "awsSgIngressRules" {      # AWS Security Group Ingress Rules
+  type = string
+}
+variable "awsSgEgressRules" {       # AWS Security Group Egress Rules
+  type = string
+}
