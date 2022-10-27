@@ -1,4 +1,30 @@
-provider "aws" {
-  version = "~> 3.0"
-  region  = "us-west-2"
+variable "awsSgName" {              # Security Group Name
+  type = string
+}
+
+variable "awsSgTagOwner" {          # Security Group Tag "Owner" value
+  type = string
+}
+
+variable "awsProviderRegion" {      # AWS Provider Region 
+  type = string
+}
+
+variable "awsVpcId" {               # AWS VPC Id
+  type = string
+}
+
+variable "awsInstanceId1" {         # Machine Resource 1 Instance Id(s)
+  type    = string
+  default = ""                      # Account for when instances is not passed.
+}
+
+variable "awsInstanceId2" {         # Machine Resource 2 Instance Id(s)
+  type    = string
+  default = ""                      # Account for when instances is not passed. 
+}
+
+variable "awsInstanceId3" {         # Machine Resource 3 Instance Id(s)
+  type    = string
+  default = ""                      # Account for when instances is not passed. 
 }
