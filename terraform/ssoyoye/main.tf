@@ -1,3 +1,20 @@
+# Define Local Variables
+locals {
+  # 1
+  awsInstanceId1_hasMultiple = length(regexall("[,]",var.awsInstanceId1)) < 1 ? false : true                              
+  awsInstanceId1_obj = jsondecode(replace(replace("[\"${var.awsInstanceId1}\"]","[\"[\"", "[\""),"\"]\"]","\"]"))
+  awsInstanceId1_length = local.awsInstanceId1_hasMultiple == true ? length(local.awsInstanceId1_obj) : 0               
+  # 2
+  awsInstanceId2_hasMultiple = length(regexall("[,]",var.awsInstanceId2)) < 1 ? false : true                              
+  awsInstanceId2_obj = jsondecode(replace(replace("[\"${var.awsInstanceId2}\"]","[\"[\"", "[\""),"\"]\"]","\"]"))
+  awsInstanceId2_length = local.awsInstanceId2_hasMultiple == true ? length(local.awsInstanceId2_obj) : 0        
+  # 3
+  awsInstanceId3_hasMultiple = length(regexall("[,]",var.awsInstanceId3)) < 1 ? false : true                              
+  awsInstanceId3_obj = jsondecode(replace(replace("[\"${var.awsInstanceId3}\"]","[\"[\"", "[\""),"\"]\"]","\"]"))
+  awsInstanceId3_length = local.awsInstanceId3_hasMultiple == true ? length(local.awsInstanceId3_obj) : 0               
+}
+
+
 locals {
   # SG Rules
   awsSgIngressRules_obj = jsondecode(var.awsSgIngressRules)   # Ingress
