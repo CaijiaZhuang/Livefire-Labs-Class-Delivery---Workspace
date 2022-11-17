@@ -1,24 +1,39 @@
-resource "aws_security_group" "allow_tls" {
-  name        = "allow_tls"
-  description = "Allow TLS inbound traffic"
-  vpc_id      = aws_vpc.main.id
-
-  ingress {
-    description = "TLS from VPC"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = [aws_vpc.main.cidr_block]
+# Create Security Group
+resource "aws_security_group" "class_delivery_sg" {       
+  name        = "class-delivery-${var.awsSgName}"                                       # SG Name
+  vpc_id      = var.awsVpcId                                                            # SG VPC ID
+  description = "class-delivery"                                                        # SG Description
+  tags = {                                                                              # SG Tags to assign
+    cas-resource-desc  = "class-delivery",
+    cas-resource-owner = var.awsSgTagOwner,
   }
+}
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
 
-  tags = {
-    Name = "allow_tls"
-  }
+# Create Ingress Rules
+resource "aws_security_group_rule" "ingress_rules" {                                  
+  type              = "ingress"
+
+  from_port         = "666"
+  to_port           = "666"
+  protocol          = "TCP"
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "The Port Of The Beast"
+
+  security_group_id = aws_security_group.class_delivery_sg.id                           # Security Group ID to which to attach 
+  depends_on        = [aws_security_group.class_delivery_sg]                            # SG needs to exist first
+}
+
+# Create Egress Rules
+resource "aws_security_group_rule" "egress_rules" {                                   
+  type              = "egress"
+
+  from_port         = "666"
+  to_port           = "666"
+  protocol          = "TCP"
+  cidr_blocks       = ["0.0.0.0/0"]
+  description       = "The Port Of The Beast"
+  
+  security_group_id = aws_security_group.class_delivery_sg.id                           # Security Group ID to which to attach 
+  depends_on        = [aws_security_group.class_delivery_sg]                            # SG needs to exist first
 }
